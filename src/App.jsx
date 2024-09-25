@@ -9,7 +9,7 @@ function App() {
 
   // 4 - custom
 
-  const {data: items} = useFetch(url)
+  const { data: items, httpConfig } = useFetch(url)
 
 
 
@@ -35,18 +35,20 @@ function App() {
     }
     console.log(product)
 
-    const res = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json"
-      },
-      body: JSON.stringify(product)
-    })
+    // const res = await fetch(url, {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-type": "application/json"
+    //   },
+    //   body: JSON.stringify(product)
+    // })
 
-    //3 carregamento dinâmico
-    const addedProduct = await res.json()
+    // //3 carregamento dinâmico
+    // const addedProduct = await res.json()
 
-    setProduct((prevProduct) => [...prevProduct, addedProduct])
+    // setProduct((prevProduct) => [...prevProduct, addedProduct])
+    httpConfig(product,"POST")
+
     setName("")
     setPrice("")
   }
