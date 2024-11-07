@@ -9,7 +9,7 @@ function App() {
 
   // 4 - custom
 
-  const { data: items, httpConfig } = useFetch(url)
+  const { data: items, httpConfig, loading, error } = useFetch(url)
 
 
 
@@ -34,19 +34,7 @@ function App() {
       price,
     }
     console.log(product)
-
-    // const res = await fetch(url, {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-type": "application/json"
-    //   },
-    //   body: JSON.stringify(product)
-    // })
-
-    // //3 carregamento dinâmico
-    // const addedProduct = await res.json()
-
-    // setProduct((prevProduct) => [...prevProduct, addedProduct])
+         
     httpConfig(product,"POST")
 
     setName("")
@@ -56,11 +44,15 @@ function App() {
   return (
     <div className="App">
       <h1>List of products</h1>
-      <ul>
-        {items && items.map((product) => (
-          <li key={product.id}>{product.name} - R$: {product.price}</li>
-        ))}
-      </ul>
+      {loading && <p>Carregando ....</p>}
+      {error && <p>{error}</p>}
+      {!error && (
+        <ul>
+          {items && items.map((product) => (
+            <li key={product.id}>{product.name} - R$: {product.price}</li>
+          ))}
+        </ul>
+      )}
       <div className="add-product">
         <form onSubmit={handleSubmit}>
           <label>
